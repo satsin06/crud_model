@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crud_model/add_list.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +10,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final ref = FirebaseFirestore.instance.collection('names');
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,6 +25,37 @@ class _HomePageState extends State<HomePage> {
         },
         child: Icon(Icons.add),
       ),
+      body: StreamBuilder<QuerySnapshot>(
+          stream: ref.snapshots(),
+          builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (!snapshot.hasData) {
+              return Center(
+                child: Text('No list found'),
+              );
+            } else {
+              return ListView.builder(
+                itemCount: snapshot.hasData ? snapshot.data!.docs.length : 0,
+                itemBuilder: (_, index) {
+                  return GestureDetector(
+                    
+                    child: Container(
+                        height: MediaQuery.of(context).size.height / 20,
+                        decoration: BoxDecoration(
+                          color: Colors.cyan,
+                          border: Border.all(
+                            color: Colors.black,
+                            width: 1,
+                          ),
+                        ),
+                        child: Center(
+                            child: Text(
+                          snapshot.data!.docs[index]['names'],
+                        ))),
+                  );
+                },
+              );
+            }
+          }),
     );
   }
 }
