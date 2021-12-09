@@ -14,14 +14,17 @@ class AddList extends StatelessWidget {
         centerTitle: true,
         automaticallyImplyLeading: true,
       ),
-      body: TextField(
-        autocorrect: true,
-        controller: names,
-        textCapitalization: TextCapitalization.words,
-        decoration: InputDecoration(
-          hintText: "Add Name",
-          hintStyle: TextStyle(
-            fontSize: 24.0,
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: TextField(
+          autocorrect: true,
+          controller: names,
+          textCapitalization: TextCapitalization.words,
+          decoration: InputDecoration(
+            hintText: "Add Name",
+            hintStyle: TextStyle(
+              fontSize: 24.0,
+            ),
           ),
         ),
       ),

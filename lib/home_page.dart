@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crud_model/add_list.dart';
 import 'package:flutter/material.dart';
 
+import 'edit_list.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -37,7 +39,12 @@ class _HomePageState extends State<HomePage> {
                 itemCount: snapshot.hasData ? snapshot.data!.docs.length : 0,
                 itemBuilder: (_, index) {
                   return GestureDetector(
-                    
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => EditList(
+                                docEdit: snapshot.data!.docs[index],
+                              )));
+                    },
                     child: Container(
                         height: MediaQuery.of(context).size.height / 20,
                         decoration: BoxDecoration(
